@@ -2,6 +2,7 @@
 using static WinFormsCustomFrame.Win32.NativeMethods;
 
 using System;
+using System.Linq;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -30,24 +31,33 @@ namespace WinFormsCustomFrame
 			}
 		}
 
-		// TODO: Implement extra caption control.
-		/*public Control CaptionExtraControl
+		public ContainerControl CaptionExtraPanel
 		{
-			get { return _CaptionExtraControl; }
+			get { return _CaptionExtraPanel; }
 			set
 			{
-				if (CaptionExtraControl == value)
+				if (CaptionExtraPanel == value)
 					return;
 
-				if (CaptionExtraControl != null)
-					Controls.Remove(CaptionExtraControl);
+				if (CaptionExtraPanel != null)
+					captionButtons.Controls.Remove(CaptionExtraPanel);
 
-				_CaptionExtraControl = value;
+				_CaptionExtraPanel = value;
 
-				if ()
+				if (CaptionExtraPanel != null)
+				{
+					captionButtons.SuspendLayout();
+
+					captionButtons.Controls.Add(CaptionExtraPanel);
+					CaptionExtraPanel.Dock = DockStyle.Left;
+
+					UpdateCaptionExtraControlButtons();
+
+					captionButtons.ResumeLayout();
+				}
 			}
 		}
-		private Control _CaptionExtraControl;*/
+		private ContainerControl _CaptionExtraPanel;
 
 		#endregion
 
@@ -224,7 +234,26 @@ namespace WinFormsCustomFrame
 			closeButton.FlatAppearance.MouseDownBackColor =
 				ColorUtils.Lerp(BackColor, Color.Red, 0.5f);
 
+			UpdateCaptionExtraControlButtons();
+
 			ResumeLayout();
+		}
+
+		private void UpdateCaptionExtraControlButtons()
+		{
+			if (CaptionExtraPanel == null)
+				return;
+
+			foreach (var btn in CaptionExtraPanel.Controls.OfType<Button>())
+			{
+				btn.FlatStyle = FlatStyle.Flat;
+				btn.FlatAppearance.BorderSize = 0;
+				btn.FlatAppearance.BorderColor = Color.FromArgb(0, 255, 255, 255);
+				btn.FlatAppearance.MouseOverBackColor =
+					sizeButton.FlatAppearance.MouseOverBackColor;
+				btn.FlatAppearance.MouseDownBackColor =
+					sizeButton.FlatAppearance.MouseDownBackColor;
+			}
 		}
 
 		private void SetupNonClientHit(Control ctrl, int hit)

@@ -37,6 +37,7 @@
 			this.bottomBorder = new System.Windows.Forms.Panel();
 			this.topBorder = new System.Windows.Forms.Panel();
 			this.caption = new System.Windows.Forms.Panel();
+			this.captionButtons = new System.Windows.Forms.Panel();
 			this.minimizeButton = new System.Windows.Forms.Button();
 			this.sizeButton = new System.Windows.Forms.Button();
 			this.closeButton = new System.Windows.Forms.Button();
@@ -45,6 +46,7 @@
 			this.leftBorder.SuspendLayout();
 			this.rightBorder.SuspendLayout();
 			this.caption.SuspendLayout();
+			this.captionButtons.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// leftBorder
@@ -133,17 +135,30 @@
 			// 
 			// caption
 			// 
-			this.caption.Controls.Add(this.minimizeButton);
-			this.caption.Controls.Add(this.sizeButton);
-			this.caption.Controls.Add(this.closeButton);
+			this.caption.Controls.Add(this.captionButtons);
 			this.caption.Controls.Add(this.title);
 			this.caption.Controls.Add(this.icon);
 			this.caption.Dock = System.Windows.Forms.DockStyle.Top;
 			this.caption.Location = new System.Drawing.Point(7, 7);
 			this.caption.Margin = new System.Windows.Forms.Padding(0);
 			this.caption.Name = "caption";
+			this.caption.Padding = new System.Windows.Forms.Padding(0, 0, 0, 1);
 			this.caption.Size = new System.Drawing.Size(786, 30);
 			this.caption.TabIndex = 4;
+			// 
+			// captionButtons
+			// 
+			this.captionButtons.AutoSize = true;
+			this.captionButtons.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.captionButtons.Controls.Add(this.minimizeButton);
+			this.captionButtons.Controls.Add(this.sizeButton);
+			this.captionButtons.Controls.Add(this.closeButton);
+			this.captionButtons.Dock = System.Windows.Forms.DockStyle.Right;
+			this.captionButtons.Location = new System.Drawing.Point(666, 0);
+			this.captionButtons.Margin = new System.Windows.Forms.Padding(0);
+			this.captionButtons.Name = "captionButtons";
+			this.captionButtons.Size = new System.Drawing.Size(120, 29);
+			this.captionButtons.TabIndex = 5;
 			// 
 			// minimizeButton
 			// 
@@ -151,10 +166,10 @@
 			this.minimizeButton.FlatAppearance.BorderSize = 0;
 			this.minimizeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.minimizeButton.Image = global::WinFormsCustomFrame.Properties.Resources.FrameMinimizeButtonLight;
-			this.minimizeButton.Location = new System.Drawing.Point(666, 0);
+			this.minimizeButton.Location = new System.Drawing.Point(0, 0);
 			this.minimizeButton.Margin = new System.Windows.Forms.Padding(0);
 			this.minimizeButton.Name = "minimizeButton";
-			this.minimizeButton.Size = new System.Drawing.Size(40, 30);
+			this.minimizeButton.Size = new System.Drawing.Size(40, 29);
 			this.minimizeButton.TabIndex = 4;
 			this.minimizeButton.UseVisualStyleBackColor = true;
 			// 
@@ -164,10 +179,10 @@
 			this.sizeButton.FlatAppearance.BorderSize = 0;
 			this.sizeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.sizeButton.Image = global::WinFormsCustomFrame.Properties.Resources.FrameMaximizeButtonLight;
-			this.sizeButton.Location = new System.Drawing.Point(706, 0);
+			this.sizeButton.Location = new System.Drawing.Point(40, 0);
 			this.sizeButton.Margin = new System.Windows.Forms.Padding(0);
 			this.sizeButton.Name = "sizeButton";
-			this.sizeButton.Size = new System.Drawing.Size(40, 30);
+			this.sizeButton.Size = new System.Drawing.Size(40, 29);
 			this.sizeButton.TabIndex = 3;
 			this.sizeButton.UseVisualStyleBackColor = true;
 			// 
@@ -177,10 +192,10 @@
 			this.closeButton.FlatAppearance.BorderSize = 0;
 			this.closeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.closeButton.Image = global::WinFormsCustomFrame.Properties.Resources.FrameCloseButtonLight;
-			this.closeButton.Location = new System.Drawing.Point(746, 0);
+			this.closeButton.Location = new System.Drawing.Point(80, 0);
 			this.closeButton.Margin = new System.Windows.Forms.Padding(0);
 			this.closeButton.Name = "closeButton";
-			this.closeButton.Size = new System.Drawing.Size(40, 30);
+			this.closeButton.Size = new System.Drawing.Size(40, 29);
 			this.closeButton.TabIndex = 2;
 			this.closeButton.UseVisualStyleBackColor = true;
 			// 
@@ -205,7 +220,7 @@
 			this.icon.Location = new System.Drawing.Point(0, 0);
 			this.icon.Margin = new System.Windows.Forms.Padding(0);
 			this.icon.Name = "icon";
-			this.icon.Size = new System.Drawing.Size(18, 30);
+			this.icon.Size = new System.Drawing.Size(18, 29);
 			this.icon.TabIndex = 0;
 			// 
 			// CustomFrameForm
@@ -227,6 +242,7 @@
 			this.rightBorder.ResumeLayout(false);
 			this.caption.ResumeLayout(false);
 			this.caption.PerformLayout();
+			this.captionButtons.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
@@ -247,5 +263,6 @@
 		private System.Windows.Forms.Panel bottomRightBorder;
 		private System.Windows.Forms.Panel topLeftBorder;
 		private System.Windows.Forms.Panel bottomLeftBorder;
+		protected System.Windows.Forms.Panel captionButtons;
 	}
 }

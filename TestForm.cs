@@ -13,6 +13,7 @@ namespace WinFormsCustomFrame
 		public TestForm()
 		{
 			InitializeComponent();
+			CaptionExtraPanel = new TestFormExtraCaptionControl();
 		}
 	}
 }

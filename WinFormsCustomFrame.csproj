@@ -46,12 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomFrameForm_Old.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CustomFrameForm_Old.Designer.cs">
-      <DependentUpon>CustomFrameForm_Old.cs</DependentUpon>
-    </Compile>
     <Compile Include="CustomFrameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,13 +60,16 @@
     <Compile Include="TestForm.Designer.cs">
       <DependentUpon>TestForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TestFormExtraCaptionControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TestFormExtraCaptionControl.Designer.cs">
+      <DependentUpon>TestFormExtraCaptionControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Utils\ColorUtils.cs" />
     <Compile Include="Utils\MathUtils.cs" />
     <Compile Include="Win32\Constants.cs" />
     <Compile Include="Win32\NativeMethods.cs" />
-    <EmbeddedResource Include="CustomFrameForm_Old.resx">
-      <DependentUpon>CustomFrameForm_Old.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="CustomFrameForm.resx">
       <DependentUpon>CustomFrameForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -88,6 +85,9 @@
     </Compile>
     <EmbeddedResource Include="TestForm.resx">
       <DependentUpon>TestForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestFormExtraCaptionControl.resx">
+      <DependentUpon>TestFormExtraCaptionControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
