@@ -30,6 +30,25 @@ namespace WinFormsCustomFrame
 			}
 		}
 
+		// TODO: Implement extra caption control.
+		/*public Control CaptionExtraControl
+		{
+			get { return _CaptionExtraControl; }
+			set
+			{
+				if (CaptionExtraControl == value)
+					return;
+
+				if (CaptionExtraControl != null)
+					Controls.Remove(CaptionExtraControl);
+
+				_CaptionExtraControl = value;
+
+				if ()
+			}
+		}
+		private Control _CaptionExtraControl;*/
+
 		#endregion
 
 		#region State
@@ -39,7 +58,6 @@ namespace WinFormsCustomFrame
 		private int lastHit;
 		private Stopwatch doubleClickTimer = new Stopwatch();
 		private Rectangle mouseDblClkRect;
-		private bool isMoving = false;
 
 		#endregion
 

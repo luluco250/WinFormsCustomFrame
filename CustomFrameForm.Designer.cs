@@ -208,7 +208,7 @@
 			this.icon.Size = new System.Drawing.Size(18, 30);
 			this.icon.TabIndex = 0;
 			// 
-			// CustomFrameForm_NoLayout
+			// CustomFrameForm
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
 			this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(35)))), ((int)(((byte)(35)))));
@@ -221,7 +221,7 @@
 			this.DoubleBuffered = true;
 			this.Font = new System.Drawing.Font("Segoe UI", 9F);
 			this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(200)))), ((int)(((byte)(200)))));
-			this.Name = "CustomFrameForm_NoLayout";
+			this.Name = "CustomFrameForm";
 			this.Text = "CustomFrameForm_NoLayouts";
 			this.leftBorder.ResumeLayout(false);
 			this.rightBorder.ResumeLayout(false);
