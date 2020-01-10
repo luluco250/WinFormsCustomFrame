@@ -3,12 +3,15 @@
 	internal static class Constants
 	{
 		// Window Messages
+		public const int WM_MOVE = 0x0003;
 		public const int WM_SIZE = 0x0005;
 		public const int WM_NCCALCSIZE = 0x0083;
 		public const int WM_NCHITTEST = 0x0084;
 		public const int WM_NCLBUTTONDOWN = 0x00A1;
+		public const int WM_NCLBUTTONUP = 0x00A2;
 		public const int WM_NCLBUTTONDBLCLK = 0x00A3;
 		public const int WM_NCRBUTTONDOWN = 0x00A4;
+		public const int WM_MOUSEMOVE = 0x0200;
 		public const int WM_DWMCOLORIZATIONCOLORCHANGED = 0x0320;
 
 		// Window Styles

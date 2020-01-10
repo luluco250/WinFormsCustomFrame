@@ -1,9 +1,10 @@
 ﻿using static WinFormsCustomFrame.Win32.Constants;
 using static WinFormsCustomFrame.Win32.NativeMethods;
 
-using System.Windows.Forms;
 using System;
 using System.Drawing;
+using System.Windows.Forms;
+using System.Diagnostics;
 using WinFormsCustomFrame.Utils;
 using WinFormsCustomFrame.Properties;
 
@@ -36,24 +37,13 @@ namespace WinFormsCustomFrame
 		private bool frameIsDark;
 		private bool isMaximized;
 		private int lastHit;
-		private Timer doubleClickTimer;
+		private Stopwatch doubleClickTimer = new Stopwatch();
+		private Rectangle mouseDblClkRect;
+		private bool isMoving = false;
 
 		#endregion
 
 		#region Setup
-
-		protected override CreateParams CreateParams
-		{
-			get
-			{
-				var cp = base.CreateParams;
-
-				//cp.ExStyle |= WS_EX_COMPOSITED;
-				//cp.ClassStyle |= CS_DROPSHADOW;
-
-				return cp;
-			}
-		}
 
 		public CustomFrameForm()
 		{
@@ -66,7 +56,13 @@ namespace WinFormsCustomFrame
 		{
 			if (!DesignMode) switch (m.Msg)
 			{
+			case WM_MOVE:
+				ResetDoubleClick();
+				m.Result = IntPtr.Zero;
+				break;
 			case WM_SIZE:
+				ResetDoubleClick();
+
 				if ((int)m.WParam == SIZE_MAXIMIZED && !isMaximized)
 				{
 					sizeButton.Image = frameIsDark
@@ -83,6 +79,7 @@ namespace WinFormsCustomFrame
 
 					isMaximized = false;
 				}
+				m.Result = IntPtr.Zero;
 				break;
 			case WM_NCCALCSIZE:
 				m.Result = IntPtr.Zero;
@@ -143,14 +140,6 @@ namespace WinFormsCustomFrame
 			closeButton.MouseLeave += CloseButton_MouseLeaveUp;
 			closeButton.MouseUp += CloseButton_MouseLeaveUp;
 			closeButton.Click += (_, e) => Close();
-
-			doubleClickTimer = new Timer();
-			doubleClickTimer.Interval = SystemInformation.DoubleClickTime;
-			doubleClickTimer.Tick += (_, e) =>
-			{
-				lastHit = 0;
-				doubleClickTimer.Stop();
-			};
 		}
 
 		#endregion
@@ -226,34 +215,58 @@ namespace WinFormsCustomFrame
 			{
 				ReleaseCapture();
 
+				Console.WriteLine($"{ctrl.Name} {hit} {lastHit}");
+
 				if (e.Button == MouseButtons.Right)
 				{
-					SendMessage(Handle, WM_NCRBUTTONDOWN, hit, 0);
+					PostMessage(Handle, WM_NCRBUTTONDOWN, hit, 0);
 					return;
 				}
 				
-				// If double-click.
-				if (lastHit == hit)
+				if (IsDoubleClick(hit))
 				{
-					SendMessage(Handle, WM_NCLBUTTONDBLCLK, hit, 0);
-
-					// Reset double click state.
-					lastHit = 0;
-					doubleClickTimer.Stop();
-
-					
+					PostMessage(Handle, WM_NCLBUTTONDBLCLK, hit, 0);
+					ResetDoubleClick();
 				}
 				else
 				{
-					SendMessage(Handle, WM_NCLBUTTONDOWN, hit, 0);
-
-					// Set for double click next time if possible.
-					lastHit = hit;
-					doubleClickTimer.Stop();
-					doubleClickTimer.Start();
+					PostMessage(Handle, WM_NCLBUTTONDOWN, hit, 0);
+					SetupDoubleClick(hit);
 				}
 			};
 		}
+
+		private void SetupDoubleClick(int hit, bool log = true)
+		{
+			lastHit = hit;
+			mouseDblClkRect = new Rectangle(
+				MousePosition,
+				SystemInformation.DoubleClickSize
+			);
+			mouseDblClkRect.X -= mouseDblClkRect.Width / 2;
+			mouseDblClkRect.Y -= mouseDblClkRect.Height / 2;
+
+			if (log)
+				Console.WriteLine("Double click setup");
+
+			doubleClickTimer.Restart();
+		}
+
+		private void ResetDoubleClick(bool log = true)
+		{
+			doubleClickTimer.Stop();
+
+			lastHit = 0;
+			mouseDblClkRect = Rectangle.Empty;
+
+			if (log)
+				Console.WriteLine("Double click reset");
+		}
+
+		private bool IsDoubleClick(int hit) =>
+			doubleClickTimer.ElapsedMilliseconds <= SystemInformation.DoubleClickTime &&
+			lastHit != 0 && lastHit == hit &&
+			mouseDblClkRect.Contains(MousePosition);
 
 		#endregion
 

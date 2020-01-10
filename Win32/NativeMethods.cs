@@ -26,5 +26,11 @@ namespace WinFormsCustomFrame.Win32
 
 		[DllImport("user32.dll")]
 		public extern static int ReleaseCapture();
+
+		[DllImport("user32.dll")]
+		public extern static int PostMessageW(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
+
+		public static bool PostMessage(IntPtr hWnd, int msg, int wParam, int lParam)
+			=> PostMessageW(hWnd, (uint)msg, (IntPtr)wParam, (IntPtr)lParam) > 1;
 	}
 }
