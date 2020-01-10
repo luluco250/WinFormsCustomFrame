@@ -16,7 +16,7 @@ namespace WinFormsCustomFrame
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new CustomFrameForm());
+			Application.Run(new CustomFrameForm_NoLayout());
 		}
 	}
 }

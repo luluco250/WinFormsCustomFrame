@@ -119,7 +119,7 @@
 			// 
 			this.frameIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
 			this.frameIcon.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.frameIcon.Location = new System.Drawing.Point(0, 0);
+			this.frameIcon.Location = new System.Drawing.Point(3, 0);
 			this.frameIcon.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
 			this.frameIcon.Name = "frameIcon";
 			this.frameIcon.Size = new System.Drawing.Size(18, 30);
@@ -130,10 +130,10 @@
 			this.frameTitle.AutoEllipsis = true;
 			this.frameTitle.AutoSize = true;
 			this.frameTitle.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.frameTitle.Location = new System.Drawing.Point(16, 0);
+			this.frameTitle.Location = new System.Drawing.Point(24, 0);
 			this.frameTitle.Margin = new System.Windows.Forms.Padding(0);
 			this.frameTitle.Name = "frameTitle";
-			this.frameTitle.Size = new System.Drawing.Size(650, 30);
+			this.frameTitle.Size = new System.Drawing.Size(642, 30);
 			this.frameTitle.TabIndex = 0;
 			this.frameTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
@@ -195,7 +195,9 @@
 			// 
 			// frameContent
 			// 
+			this.frameContent.BackColor = System.Drawing.SystemColors.Control;
 			this.frameContent.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.frameContent.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.frameContent.Location = new System.Drawing.Point(0, 30);
 			this.frameContent.Margin = new System.Windows.Forms.Padding(0);
 			this.frameContent.Name = "frameContent";
@@ -315,13 +317,13 @@
 		private System.Windows.Forms.Panel frameBorderTop;
 		private System.Windows.Forms.TableLayoutPanel frameInnerLayout;
 		private System.Windows.Forms.TableLayoutPanel frameCaption;
-		private System.Windows.Forms.Panel frameContent;
 		private System.Windows.Forms.Panel frameIcon;
 		private System.Windows.Forms.Label frameTitle;
 		private System.Windows.Forms.Panel frameCaptionButtons;
 		private System.Windows.Forms.Button frameMinimizeButton;
 		private System.Windows.Forms.Button frameSizeButton;
 		private System.Windows.Forms.Button frameCloseButton;
+		protected System.Windows.Forms.Panel frameContent;
 	}
 }
 

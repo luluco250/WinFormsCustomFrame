@@ -9,7 +9,7 @@ using WinFormsCustomFrame.Properties;
 
 namespace WinFormsCustomFrame
 {
-	public partial class CustomFrameForm : Form
+	public partial class CustomFrameForm_NoLayout : Form
 	{
 		#region Constants
 
@@ -25,7 +25,7 @@ namespace WinFormsCustomFrame
 			set
 			{
 				base.Text = value;
-				frameTitle.Text = value;
+				title.Text = value;
 			}
 		}
 
@@ -55,7 +55,7 @@ namespace WinFormsCustomFrame
 			}
 		}
 
-		public CustomFrameForm()
+		public CustomFrameForm_NoLayout()
 		{
 			InitializeComponent();
 			SetupStyling();
@@ -69,7 +69,7 @@ namespace WinFormsCustomFrame
 			case WM_SIZE:
 				if ((int)m.WParam == SIZE_MAXIMIZED && !isMaximized)
 				{
-					frameSizeButton.Image = frameIsDark
+					sizeButton.Image = frameIsDark
 						? Resources.FrameRestoreButtonLight
 						: Resources.FrameRestoreButtonDark;
 
@@ -77,7 +77,7 @@ namespace WinFormsCustomFrame
 				}
 				else if (isMaximized)
 				{
-					frameSizeButton.Image = frameIsDark
+					sizeButton.Image = frameIsDark
 						? Resources.FrameMaximizeButtonLight
 						: Resources.FrameMaximizeButtonDark;
 
@@ -100,15 +100,15 @@ namespace WinFormsCustomFrame
 		{
 			UpdateFrameColor();
 
-			frameMinimizeButton.FlatAppearance.BorderColor =
-			frameSizeButton.FlatAppearance.BorderColor =
-			frameCloseButton.FlatAppearance.BorderColor =
+			minimizeButton.FlatAppearance.BorderColor =
+			sizeButton.FlatAppearance.BorderColor =
+			closeButton.FlatAppearance.BorderColor =
 				Color.FromArgb(0, 255, 255, 255);
 
-			frameTitle.Text = Text;
+			title.Text = Text;
 
-			int iconSize = Math.Min(frameIcon.Width, frameIcon.Height);
-			frameIcon.BackgroundImage = new Bitmap(
+			int iconSize = Math.Min(icon.Width, icon.Height);
+			icon.BackgroundImage = new Bitmap(
 				Icon.ToBitmap(),
 				new Size(iconSize, iconSize)
 			);
@@ -116,33 +116,33 @@ namespace WinFormsCustomFrame
 
 		private void SetupEvents()
 		{
-			SetupNonClientHit(frameBorderLeft, HTLEFT);
-			SetupNonClientHit(frameBorderRight, HTRIGHT);
-			SetupNonClientHit(frameBorderTop, HTTOP);
-			SetupNonClientHit(frameBorderTopLeft, HTTOPLEFT);
-			SetupNonClientHit(frameBorderTopRight, HTTOPRIGHT);
-			SetupNonClientHit(frameBorderBottom, HTBOTTOM);
-			SetupNonClientHit(frameBorderBottomLeft, HTBOTTOMLEFT);
-			SetupNonClientHit(frameBorderBottomRight, HTBOTTOMRIGHT);
-			SetupNonClientHit(frameCaption, HTCAPTION);
-			SetupNonClientHit(frameTitle, HTCAPTION);
-			SetupNonClientHit(frameIcon, HTSYSMENU);
+			SetupNonClientHit(leftBorder, HTLEFT);
+			SetupNonClientHit(rightBorder, HTRIGHT);
+			SetupNonClientHit(topBorder, HTTOP);
+			SetupNonClientHit(topLeftBorder, HTTOPLEFT);
+			SetupNonClientHit(topRightBorder, HTTOPRIGHT);
+			SetupNonClientHit(bottomBorder, HTBOTTOM);
+			SetupNonClientHit(bottomLeftBorder, HTBOTTOMLEFT);
+			SetupNonClientHit(bottomRightBorder, HTBOTTOMRIGHT);
+			SetupNonClientHit(caption, HTCAPTION);
+			SetupNonClientHit(title, HTCAPTION);
+			SetupNonClientHit(icon, HTSYSMENU);
 
-			frameMinimizeButton.Click += (_, e)
+			minimizeButton.Click += (_, e)
 				=> WindowState = FormWindowState.Minimized;
 			
-			frameSizeButton.Click += (_, e) =>
+			sizeButton.Click += (_, e) =>
 				WindowState = (WindowState == FormWindowState.Maximized)
 					? FormWindowState.Normal
 					: FormWindowState.Maximized;
 			
 			// TODO: There is a delay before the close button image is updated.
 			// Perhaps it'd be best to create a custom control instead.
-			frameCloseButton.MouseEnter += CloseButton_MouseEnterDown;
-			frameCloseButton.MouseDown += CloseButton_MouseEnterDown;
-			frameCloseButton.MouseLeave += CloseButton_MouseLeaveUp;
-			frameCloseButton.MouseUp += CloseButton_MouseLeaveUp;
-			frameCloseButton.Click += (_, e) => Close();
+			closeButton.MouseEnter += CloseButton_MouseEnterDown;
+			closeButton.MouseDown += CloseButton_MouseEnterDown;
+			closeButton.MouseLeave += CloseButton_MouseLeaveUp;
+			closeButton.MouseUp += CloseButton_MouseLeaveUp;
+			closeButton.Click += (_, e) => Close();
 
 			doubleClickTimer = new Timer();
 			doubleClickTimer.Interval = SystemInformation.DoubleClickTime;
@@ -177,18 +177,18 @@ namespace WinFormsCustomFrame
 			if (lum < DarkFrameColorThreshold)
 			{
 				ForeColor = Color.White;
-				frameMinimizeButton.Image = Resources.FrameMinimizeButtonLight;
-				frameSizeButton.Image = (WindowState == FormWindowState.Maximized)
+				minimizeButton.Image = Resources.FrameMinimizeButtonLight;
+				sizeButton.Image = (WindowState == FormWindowState.Maximized)
 					? Resources.FrameRestoreButtonLight
 					: Resources.FrameMaximizeButtonLight;
-				frameCloseButton.Image = Resources.FrameCloseButtonLight;
+				closeButton.Image = Resources.FrameCloseButtonLight;
 
-				frameMinimizeButton.FlatAppearance.MouseOverBackColor =
-				frameSizeButton.FlatAppearance.MouseOverBackColor =
+				minimizeButton.FlatAppearance.MouseOverBackColor =
+				sizeButton.FlatAppearance.MouseOverBackColor =
 					ColorUtils.Add(BackColor, 20);
 
-				frameMinimizeButton.FlatAppearance.MouseDownBackColor =
-				frameSizeButton.FlatAppearance.MouseDownBackColor =
+				minimizeButton.FlatAppearance.MouseDownBackColor =
+				sizeButton.FlatAppearance.MouseDownBackColor =
 					ColorUtils.Add(BackColor, 40);
 
 				frameIsDark = true;
@@ -196,25 +196,25 @@ namespace WinFormsCustomFrame
 			else
 			{
 				ForeColor = Color.Black;
-				frameMinimizeButton.Image = Resources.FrameMinimizeButtonDark;
-				frameSizeButton.Image = (WindowState == FormWindowState.Maximized)
+				minimizeButton.Image = Resources.FrameMinimizeButtonDark;
+				sizeButton.Image = (WindowState == FormWindowState.Maximized)
 					? Resources.FrameRestoreButtonDark
 					: Resources.FrameMaximizeButtonDark;
-				frameCloseButton.Image = Resources.FrameCloseButtonDark;
+				closeButton.Image = Resources.FrameCloseButtonDark;
 
-				frameMinimizeButton.FlatAppearance.MouseOverBackColor =
-				frameSizeButton.FlatAppearance.MouseOverBackColor =
+				minimizeButton.FlatAppearance.MouseOverBackColor =
+				sizeButton.FlatAppearance.MouseOverBackColor =
 					ColorUtils.Add(BackColor, -20);
 
-				frameMinimizeButton.FlatAppearance.MouseDownBackColor =
-				frameSizeButton.FlatAppearance.MouseDownBackColor =
+				minimizeButton.FlatAppearance.MouseDownBackColor =
+				sizeButton.FlatAppearance.MouseDownBackColor =
 					ColorUtils.Add(BackColor, -40);
 
 				frameIsDark = false;
 			}
 
-			frameCloseButton.FlatAppearance.MouseOverBackColor = Color.Red;
-			frameCloseButton.FlatAppearance.MouseDownBackColor =
+			closeButton.FlatAppearance.MouseOverBackColor = Color.Red;
+			closeButton.FlatAppearance.MouseDownBackColor =
 				ColorUtils.Lerp(BackColor, Color.Red, 0.5f);
 
 			ResumeLayout();
@@ -262,13 +262,13 @@ namespace WinFormsCustomFrame
 		private void CloseButton_MouseEnterDown(object sender, EventArgs e)
 		{
 			if (!frameIsDark)
-				frameCloseButton.Image = Resources.FrameCloseButtonLight;
+				closeButton.Image = Resources.FrameCloseButtonLight;
 		}
 
 		private void CloseButton_MouseLeaveUp(object sender, EventArgs e)
 		{
 			if (!frameIsDark)
-				frameCloseButton.Image = Resources.FrameCloseButtonDark;
+				closeButton.Image = Resources.FrameCloseButtonDark;
 		}
 
 		#endregion
