@@ -18,6 +18,21 @@ namespace WinFormsCustomFrame.Utils
 		public static int GetColorLuminance(Color color)
 			=> Math.Max(color.R, Math.Max(color.G, color.B));
 
+		public static int GetColorAverage(Color color)
+			=> (color.R + color.G + color.B) / 255;
+
+		public static int GetColorLuma(Color color)
+		{
+			const float RWeight = 0.2126f;
+			const float GWeight = 0.7152f;
+			const float BWeight = 0.0722f;
+
+			return
+				(int)(color.R * RWeight) +
+				(int)(color.G * GWeight) +
+				(int)(color.B * BWeight);
+		}
+
 		public static Color Add(Color color, int add)
 		{
 			return Color.FromArgb(

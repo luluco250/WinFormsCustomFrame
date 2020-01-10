@@ -48,8 +48,8 @@ namespace WinFormsCustomFrame
 			{
 				var cp = base.CreateParams;
 
-				cp.ExStyle |= WS_EX_COMPOSITED;
-				cp.ClassStyle |= CS_DROPSHADOW;
+				//cp.ExStyle |= WS_EX_COMPOSITED;
+				//cp.ClassStyle |= CS_DROPSHADOW;
 
 				return cp;
 			}
@@ -119,6 +119,7 @@ namespace WinFormsCustomFrame
 			SetupNonClientHit(frameBorderBottom, HTBOTTOM);
 			SetupNonClientHit(frameBorderBottomLeft, HTBOTTOMLEFT);
 			SetupNonClientHit(frameBorderBottomRight, HTBOTTOMRIGHT);
+			SetupNonClientHit(frameCaption, HTCAPTION);
 			SetupNonClientHit(frameTitle, HTCAPTION);
 			SetupNonClientHit(frameIcon, HTSYSMENU);
 
@@ -166,7 +167,7 @@ namespace WinFormsCustomFrame
 
 			BackColor = Color.FromArgb(255, ColorUtils.ColorFromDwordArgb(colorDword));
 
-			var lum = ColorUtils.GetColorLuminance(BackColor);
+			var lum = ColorUtils.GetColorLuma(BackColor);
 
 			if (lum < DarkFrameColorThreshold)
 			{
@@ -225,26 +226,26 @@ namespace WinFormsCustomFrame
 					SendMessage(Handle, WM_NCRBUTTONDOWN, hit, 0);
 					return;
 				}
-
-				SendMessage(
-					Handle,
-					(lastHit == hit) ? WM_NCLBUTTONDBLCLK : WM_NCLBUTTONDOWN,
-					hit,
-					0
-				);
 				
-				if (lastHit != hit)
+				// If double-click.
+				if (lastHit == hit)
 				{
+					SendMessage(Handle, WM_NCLBUTTONDBLCLK, hit, 0);
+
+					// Reset double click state.
+					lastHit = 0;
+					doubleClickTimer.Stop();
+
+					
+				}
+				else
+				{
+					SendMessage(Handle, WM_NCLBUTTONDOWN, hit, 0);
+
 					// Set for double click next time if possible.
 					lastHit = hit;
 					doubleClickTimer.Stop();
 					doubleClickTimer.Start();
-				}
-				else
-				{
-					// Reset double click state.
-					lastHit = 0;
-					doubleClickTimer.Stop();
 				}
 			};
 		}
