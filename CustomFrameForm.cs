@@ -106,7 +106,9 @@ namespace WinFormsCustomFrame
 				Color.FromArgb(0, 255, 255, 255);
 
 			frameTitle.Text = Text;
-			frameIcon.BackgroundImage = new Bitmap(Icon.ToBitmap(), new Size(14, 14));
+
+			int iconSize = Math.Min(frameIcon.Width, frameIcon.Height);
+			frameIcon.BackgroundImage = new Bitmap(Icon.ToBitmap(), new Size(iconSize, iconSize));
 		}
 
 		private void SetupEvents()

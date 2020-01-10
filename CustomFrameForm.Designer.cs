@@ -120,9 +120,9 @@
 			this.frameIcon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
 			this.frameIcon.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.frameIcon.Location = new System.Drawing.Point(0, 0);
-			this.frameIcon.Margin = new System.Windows.Forms.Padding(0);
+			this.frameIcon.Margin = new System.Windows.Forms.Padding(3, 0, 3, 0);
 			this.frameIcon.Name = "frameIcon";
-			this.frameIcon.Size = new System.Drawing.Size(16, 30);
+			this.frameIcon.Size = new System.Drawing.Size(18, 30);
 			this.frameIcon.TabIndex = 0;
 			// 
 			// frameTitle
