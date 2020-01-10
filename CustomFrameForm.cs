@@ -218,13 +218,14 @@ namespace WinFormsCustomFrame
 		{
 			ctrl.MouseDown += (_, e) =>
 			{
+				ReleaseCapture();
+
 				if (e.Button == MouseButtons.Right)
 				{
 					SendMessage(Handle, WM_NCRBUTTONDOWN, hit, 0);
 					return;
 				}
 
-				ReleaseCapture();
 				SendMessage(
 					Handle,
 					(lastHit == hit) ? WM_NCLBUTTONDBLCLK : WM_NCLBUTTONDOWN,
@@ -232,9 +233,19 @@ namespace WinFormsCustomFrame
 					0
 				);
 				
-				lastHit = hit;
-				doubleClickTimer.Stop();
-				doubleClickTimer.Start();
+				if (lastHit != hit)
+				{
+					// Set for double click next time if possible.
+					lastHit = hit;
+					doubleClickTimer.Stop();
+					doubleClickTimer.Start();
+				}
+				else
+				{
+					// Reset double click state.
+					lastHit = 0;
+					doubleClickTimer.Stop();
+				}
 			};
 		}
 
